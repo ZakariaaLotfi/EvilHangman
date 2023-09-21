@@ -1,8 +1,39 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 
 class Main {
+    // public static String wordString() throws IOException{
+    //     File file = new File("src/words.txt");
+    //     if (!file.exists()) {
+    //         throw new FileNotFoundException("File not found: " + file.getAbsolutePath());
+    //     }
+    
+    //     try (Scanner scanner = new Scanner(file)) {
+    //         String word = null;
+    //         int length = 8;
+    //         String nword = null;
+    //         for (int i = 0; i < 2048; i++) {
+    //             if (!scanner.hasNextLine()) {
+    //                 throw new IllegalArgumentException("Not enough words in the file: " + file.getAbsolutePath());
+    //             }
+    //             word = scanner.nextLine();
+    //             if (word.length()<length){
+    //                 length = word.length();
+    //                 nword = word;
+    //             }
+    //         }
+    //         return nword;
+    //     }
+    // }
     public static void main(String[] args) throws IOException {
       Game game = new Game();
       game.game();
+      Hangman man = new Hangman();
+      String[] stages = man.stagesAccessor();
+      for (String s : stages){
+        System.out.println(s);
+      }
     }
   }
