@@ -12,7 +12,7 @@ public class Game{
     public void game() throws IOException{
         System.out.println("Welcome to hangman!");
         RandomNum numObj = new RandomNum();
-        int num = 2048;
+        int num = numObj.accessor();
         WordPicker wordObj = new WordPicker(num);
         String word = wordObj.accessWord();
         System.out.println(word);
