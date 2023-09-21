@@ -30,10 +30,5 @@ class Main {
     public static void main(String[] args) throws IOException {
       Game game = new Game();
       game.game();
-      Hangman man = new Hangman();
-      String[] stages = man.stagesAccessor();
-      for (String s : stages){
-        System.out.println(s);
-      }
     }
   }

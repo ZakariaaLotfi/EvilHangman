@@ -6,11 +6,11 @@ import java.util.Scanner;
 public class WordPicker {
     private String word;
 
-    public WordPicker(int amount) throws IOException {
-        word = pickWord(amount);
+    public WordPicker(int amount, int difficulty) throws IOException {
+        word = pickWord(amount, difficulty);
     }
 
-    public String pickWord(int amount) throws IOException {
+    public String pickWord(int amount, int difficulty) throws IOException {
       File file = new File("src/words.txt");
       if (!file.exists()) {
           throw new FileNotFoundException("File not found: " + file.getAbsolutePath());

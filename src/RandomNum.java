@@ -11,7 +11,7 @@ public class RandomNum {
         return number;
     }
 
-    public int accessor() {
+    public int numAccessor() {
         return number;
     }
 }
