@@ -1,6 +1,8 @@
-public class Main {
-    public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
-        
+import java.io.IOException;
+
+class Main {
+    public static void main(String[] args) throws IOException {
+      Game game = new Game();
+      game.game();
     }
-}
+  }
