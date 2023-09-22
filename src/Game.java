@@ -46,14 +46,13 @@ public class Game{
         for (int i=0; i<word.length(); i++){
             blankWord += "_ ";
         }
-        blankWord.substring(0, blankWord.length()-1);
+        blankWord = blankWord.substring(0, blankWord.length()-1);
         System.out.println(word);
         System.out.println(blankWord);
     }
 
     public void game() throws IOException{
         int difficulty = intro();
-        System.out.println(difficulty);
         guessing(difficulty);
     }
 }
