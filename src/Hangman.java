@@ -1,6 +1,5 @@
 public class Hangman {
-    private int lives = 7;
-    private int stage = 0;
+    private int lives = 8;
     private String[] hangmanStages = {
         "   +---+\n" +
         "       |\n" +
@@ -68,8 +67,8 @@ public class Hangman {
     };
 
     public String newStage(){
-        stage-=1;
-        return hangmanStages[stage];
+        lives--;
+        return hangmanStages[7-lives];
     }
 
     public int livesAccessor(){
