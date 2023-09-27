@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Game{
-    public Game(){
+    public Game() throws IOException{
+        game();
     }
     
     public static void clearScreen() {  
@@ -26,11 +27,11 @@ public class Game{
         }
     }
 
-    public static int checkLetter(Scanner s, String[] letters, ArrayList<String> chosen, ArrayList<String> alph){
+    public static int checkLetter(Scanner s, String answer, String[] letters, ArrayList<String> chosen, ArrayList<String> alph){
         while (true){
-            String answer;
-            System.out.println("Enter a letter");
-            answer = s.nextLine().toUpperCase();
+            // String answer;
+            // System.out.println("Enter a letter");
+            // answer = s.nextLine().toUpperCase();
             if (alph.contains(answer.toUpperCase())){
                 int inWord = 0;
                 System.out.println(letters);
@@ -69,7 +70,7 @@ public class Game{
         return 2;
     }
 
-    public static void guessing(int difficulty) throws IOException{
+    public static int guessing(int difficulty) throws IOException{
         RandomNum numObj = new RandomNum();
         int num = numObj.numAccessor();
         WordPicker wordObj = new WordPicker(num, difficulty);
@@ -77,7 +78,7 @@ public class Game{
         String[] letters = word.split("");
         System.out.println(word);
         //System.out.println(letters);
-        String blankWord = "";
+        StringBuilder blankWord = new StringBuilder("");
         for (int i=0; i<word.length(); i++){
             blankWord += "_ ";
         }
@@ -86,29 +87,54 @@ public class Game{
         // String[] stages = man.stagesAccessor();
         // int lives = man.livesAccessor();
         String stage = man.newStage();
-        System.out.println(stage);
-        System.out.println(blankWord);
         String[] alphs = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         ArrayList<String> alphabet = new ArrayList<String>();
         for (String a:alphs){
             alphabet.add(a);
         }
         ArrayList<String> chosen = new ArrayList<String>();
-        Scanner scanner = new Scanner(System.in);
+        Scanner s = new Scanner(System.in);
+        String answer;
         int i = 0;
-        while (i!=word.length()){
-            int correct = checkLetter(scanner, letters, chosen, alphabet);
-            if (correct==1){
-                System.out.println("Correct!");
-                i++;
+        while (i<(word.length()-1)){
+            System.out.println("Enter a letter");
+            answer = s.nextLine().toUpperCase();
+            if (man.livesAccessor()!=0){
+                System.out.println(stage);
+                System.out.println(blankWord);
+                int correct = checkLetter(s, answer, letters, chosen, alphabet);
+                if (correct==1){
+                    for (int j=0; j<answer.length(); j++){
+                        char let = answer.charAt(j);
+                        int blankIndex = blankWord.indexOf(let);
+                        blankWord.setCharAt();
+                    }
+                    System.out.println("Correct!");
+                    i++;
+                }else{
+                    System.out.println("Wrong!");
+                    stage = man.newStage();
+                }
+                try {
+                    Thread.sleep(1500);
+                } catch(InterruptedException e) {
+                    System.out.println("got interrupted!");
+                }
+                clearScreen();
             }else{
-                System.out.println("Wrong!");
+                return 0;
             }
         }
+        s.close();
+        return i;
     }
 
     public void game() throws IOException{
         int difficulty = intro();
-        guessing(difficulty);
+        if (guessing(difficulty)==1){
+            System.out.println("You won. yay.");
+        }else{
+            System.out.println("WOMP WOMP. YOU LOSE!");
+        }
     }
 }
