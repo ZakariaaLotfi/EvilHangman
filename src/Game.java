@@ -14,6 +14,16 @@ public class Game{
         System.out.flush();  
     }
 
+    public static String updateBlankWord(String answer, String word, String blankWord){
+        for (int j=0; j<word.length(); j++){
+            String letter = word.charAt(j)+"";
+            if (letter.equals(answer)){
+                blankWord = blankWord.substring(0, j)+answer+blankWord.substring(j + 1);
+            }
+        }
+        return blankWord;
+    }
+
     public static String userStringChoices(Scanner s, String question,String[] possibleAnswers){
         String answer;
         while (true){
@@ -28,33 +38,27 @@ public class Game{
     }
 
     public static int checkLetter(Scanner s, String answer, String[] letters, ArrayList<String> chosen, ArrayList<String> alph){
-        while (true){
-            // String answer;
-            // System.out.println("Enter a letter");
-            // answer = s.nextLine().toUpperCase();
-            if (alph.contains(answer.toUpperCase())){
-                int inWord = 0;
-                System.out.println(letters);
-                for (String i:letters){
-                    System.out.println(i);
-                    if (answer.equals(i)){
-                        inWord = 1;
-                        break;
-                    }
+        if (alph.contains(answer.toUpperCase())){
+            int inWord = 0;
+            for (String i:letters){
+                System.out.println(i);
+                if (answer.equals(i)){
+                    inWord = 1;
+                    break;
                 }
-                if (inWord==0){
-                    return 0;
-                }else {
-                    if (chosen.contains(answer)){
-                        System.out.println("Letter already chosen");
-                    }else{
-                        chosen.add(answer);
-                        return 1;
-                    }
-                    
+            }
+            if (inWord==0){
+                return 0;
+            }else {
+                if (chosen.contains(answer)){
+                    System.out.println("Letter already chosen");
+                }else{
+                    chosen.add(answer);
+                    return 1;
                 }
             }
         }
+        return 2;
     }
     
     public static int intro(){
@@ -78,9 +82,9 @@ public class Game{
         String[] letters = word.split("");
         System.out.println(word);
         //System.out.println(letters);
-        StringBuilder blankWord = new StringBuilder("");
-        for (int i=0; i<word.length(); i++){
-            blankWord += "_ ";
+        String blankWord = "";
+        for (int i=0; i<=word.length(); i++){
+            blankWord += "_";
         }
         blankWord = blankWord.substring(0, blankWord.length()-1);
         Hangman man = new Hangman();
@@ -96,44 +100,52 @@ public class Game{
         Scanner s = new Scanner(System.in);
         String answer;
         int i = 0;
-        while (i<(word.length()-1)){
-            System.out.println("Enter a letter");
-            answer = s.nextLine().toUpperCase();
+        // System.out.println(stage);
+        while (i<=(word.length())){
+            clearScreen();
             if (man.livesAccessor()!=0){
                 System.out.println(stage);
+                System.out.println();
                 System.out.println(blankWord);
+                System.out.println("Enter a letter");
+                answer = s.nextLine().toUpperCase();
                 int correct = checkLetter(s, answer, letters, chosen, alphabet);
                 if (correct==1){
-                    for (int j=0; j<answer.length(); j++){
-                        char let = answer.charAt(j);
-                        int blankIndex = blankWord.indexOf(let);
-                        blankWord.setCharAt();
-                    }
+                    blankWord = updateBlankWord(answer, word, blankWord);
+                    // for (int j=0; j<answer.length(); j++){
+                    //     char letter = answer.charAt(j);
+                    //     int blankIndex = word.indexOf(letter);
+                    //     System.out.println(blankIndex);
+                    //     blankWord = blankWord.substring(0, blankIndex)+letter+blankWord.substring(blankIndex + 1);
                     System.out.println("Correct!");
                     i++;
-                }else{
+                }else if (correct==0){
                     System.out.println("Wrong!");
                     stage = man.newStage();
                 }
                 try {
                     Thread.sleep(1500);
                 } catch(InterruptedException e) {
-                    System.out.println("got interrupted!");
+                    System.out.println("failed to sleep");
                 }
-                clearScreen();
+                if (blankWord.equals(word)){
+                    clearScreen();
+                    return 1;
+                }
             }else{
                 return 0;
             }
         }
         s.close();
-        return i;
+        return 1;
     }
 
     public void game() throws IOException{
         int difficulty = intro();
-        if (guessing(difficulty)==1){
+        int victoryStatus = guessing(difficulty);
+        if (victoryStatus==1){
             System.out.println("You won. yay.");
-        }else{
+        }else if(victoryStatus==0){
             System.out.println("WOMP WOMP. YOU LOSE!");
         }
     }
