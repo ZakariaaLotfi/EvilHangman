@@ -1,8 +1,6 @@
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.stream.Stream;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Game{
     public Game() throws IOException{
@@ -83,14 +81,11 @@ public class Game{
         String word = wordObj.accessWord().toUpperCase();
         String[] letters = word.split("");
         System.out.println(word);
-        //System.out.println(letters);
         String blankWord = "";
         for (int i=0; i<word.length(); i++){
             blankWord += "_ ";
         }
         blankWord = blankWord.substring(0, blankWord.length()-1);
-        // String[] stages = man.stagesAccessor();
-        // int lives = man.livesAccessor();
         String stage = man.newStage();
         String[] alphs = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         ArrayList<String> alphabet = new ArrayList<String>();
@@ -101,7 +96,6 @@ public class Game{
         Scanner s = new Scanner(System.in);
         String answer;
         int i = 0;
-        // System.out.println(stage);
         while (i<=(word.length())){
             clearScreen();
             if (man.livesAccessor()!=0){
@@ -113,11 +107,6 @@ public class Game{
                 int correct = checkLetter(s, answer, letters, chosen, alphabet);
                 if (correct==1){
                     blankWord = updateBlankWord(answer, word, blankWord);
-                    // for (int j=0; j<answer.length(); j++){
-                    //     char letter = answer.charAt(j);
-                    //     int blankIndex = word.indexOf(letter);
-                    //     System.out.println(blankIndex);
-                    //     blankWord = blankWord.substring(0, blankIndex)+letter+blankWord.substring(blankIndex + 1);
                     System.out.println("Correct!");
                     i++;
                 }else if (correct==0){
