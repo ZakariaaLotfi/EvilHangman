@@ -2,57 +2,57 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Game{
-    public Game() throws IOException{
+public class Game {
+    public Game() throws IOException {
         Hangman man = new Hangman();
         game(man);
     }
-    
-    public static void clearScreen() {  
-        System.out.print("\033[H\033[2J");  
-        System.out.flush();  
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
-    public static String updateBlankWord(String answer, String word, String blankWord){
-        for (int j=0; j<word.length()*2; j+=2){
-            String letter = word.charAt(j/2)+"";
-            if (letter.equals(answer)){
-                blankWord = blankWord.substring(0, j)+answer+blankWord.substring(j + 1);
+    public static String updateBlankWord(String answer, String word, String blankWord) {
+        for (int j = 0; j < word.length() * 2; j += 2) {
+            String letter = word.charAt(j / 2) + "";
+            if (letter.equals(answer)) {
+                blankWord = blankWord.substring(0, j) + answer + blankWord.substring(j + 1);
             }
         }
         return blankWord;
     }
 
-    public static String userStringChoices(Scanner s, String question,String[] possibleAnswers){
+    public static String userStringChoices(Scanner s, String question, String[] possibleAnswers) {
         String answer;
-        while (true){
+        while (true) {
             System.out.println(question);
             answer = s.nextLine().toLowerCase();
-            for (int i=0; i<possibleAnswers.length; i++){
-                if (answer.equals(possibleAnswers[i])){
+            for (int i = 0; i < possibleAnswers.length; i++) {
+                if (answer.equals(possibleAnswers[i])) {
                     return answer;
                 }
             }
         }
     }
 
-    public static int checkLetter(Scanner s, String answer, String[] letters, ArrayList<String> chosen, ArrayList<String> alph){
-        if (alph.contains(answer.toUpperCase())){
+    public static int checkLetter(Scanner s, String answer, String[] letters, ArrayList<String> chosen, ArrayList<String> alph) {
+        if (alph.contains(answer.toUpperCase())) {
             int inWord = 0;
-            for (String i:letters){
+            for (String i : letters) {
                 System.out.println(i);
-                if (answer.equals(i)){
+                if (answer.equals(i)) {
                     inWord = 1;
                     break;
                 }
             }
-            if (chosen.contains(answer)){
+            if (chosen.contains(answer)) {
                 System.out.println("Letter already chosen");
-            }else{
-                if (inWord==0){
+            } else {
+                if (inWord == 0) {
                     chosen.add(answer);
                     return 0;
-                }else {
+                } else {
                     chosen.add(answer);
                     return 1;
                 }
@@ -60,19 +60,25 @@ public class Game{
         }
         return 2;
     }
-    
-    public static int intro(){
+
+    public static int intro() {
         System.out.println("Welcome to hangman!");
         Scanner scanner = new Scanner(System.in);
-        String[] difficulties = new String[] {"easy", "medium", "hard"};
-        String difficultyString = userStringChoices(scanner, "What difficulty? (easy/medium/hard)",difficulties);
-        if (difficultyString.equals("easy")){
+        String[] difficulties = new String[]{"easy", "medium", "hard"};
+        String difficultyString = userStringChoices(scanner, "What difficulty? (easy/medium/hard)(Evil)", difficulties);
+        if (difficultyString.equals("easy")) {
             return 0;
-        }else if (difficultyString.equals("medium")){
+        } else if (difficultyString.equals("medium")) {
             return 1;
+        } else if (difficultyString.equals("hard")) {
+
+
+            return 2;
+        } else {
+            return 3;
         }
-        return 2;
     }
+
 
     public static int guessing(int difficulty, Hangman man) throws IOException{
         RandomNum numObj = new RandomNum();
