@@ -6,7 +6,8 @@ import java.util.Arrays;
 
 public class Game{
     public Game() throws IOException{
-        game();
+        Hangman man = new Hangman();
+        game(man);
     }
     
     public static void clearScreen() {  
@@ -15,8 +16,8 @@ public class Game{
     }
 
     public static String updateBlankWord(String answer, String word, String blankWord){
-        for (int j=0; j<word.length(); j++){
-            String letter = word.charAt(j)+"";
+        for (int j=0; j<word.length()*2; j+=2){
+            String letter = word.charAt(j/2)+"";
             if (letter.equals(answer)){
                 blankWord = blankWord.substring(0, j)+answer+blankWord.substring(j + 1);
             }
@@ -47,12 +48,13 @@ public class Game{
                     break;
                 }
             }
-            if (inWord==0){
-                return 0;
-            }else {
-                if (chosen.contains(answer)){
-                    System.out.println("Letter already chosen");
-                }else{
+            if (chosen.contains(answer)){
+                System.out.println("Letter already chosen");
+            }else{
+                if (inWord==0){
+                    chosen.add(answer);
+                    return 0;
+                }else {
                     chosen.add(answer);
                     return 1;
                 }
@@ -74,7 +76,7 @@ public class Game{
         return 2;
     }
 
-    public static int guessing(int difficulty) throws IOException{
+    public static int guessing(int difficulty, Hangman man) throws IOException{
         RandomNum numObj = new RandomNum();
         int num = numObj.numAccessor();
         WordPicker wordObj = new WordPicker(num, difficulty);
@@ -83,11 +85,10 @@ public class Game{
         System.out.println(word);
         //System.out.println(letters);
         String blankWord = "";
-        for (int i=0; i<=word.length(); i++){
-            blankWord += "_";
+        for (int i=0; i<word.length(); i++){
+            blankWord += "_ ";
         }
         blankWord = blankWord.substring(0, blankWord.length()-1);
-        Hangman man = new Hangman();
         // String[] stages = man.stagesAccessor();
         // int lives = man.livesAccessor();
         String stage = man.newStage();
@@ -128,7 +129,8 @@ public class Game{
                 } catch(InterruptedException e) {
                     System.out.println("failed to sleep");
                 }
-                if (blankWord.equals(word)){
+                String blankWordSansSpace = blankWord.replaceAll(" ", "");
+                if (blankWordSansSpace.equals(word)){
                     clearScreen();
                     return 1;
                 }
@@ -140,9 +142,10 @@ public class Game{
         return 1;
     }
 
-    public void game() throws IOException{
+    public void game(Hangman man) throws IOException{
         int difficulty = intro();
-        int victoryStatus = guessing(difficulty);
+        int victoryStatus = guessing(difficulty, man);
+        System.out.println(man.stageAccessor()+"\n");
         if (victoryStatus==1){
             System.out.println("You won. yay.");
         }else if(victoryStatus==0){

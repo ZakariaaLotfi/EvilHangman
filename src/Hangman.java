@@ -77,4 +77,7 @@ public class Hangman {
     public String[] stagesAccessor(){
         return hangmanStages;
     }
+    public String stageAccessor(){
+        return hangmanStages[7-lives];
+    }
 }
