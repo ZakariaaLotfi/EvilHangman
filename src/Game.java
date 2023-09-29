@@ -65,18 +65,19 @@ public class Game {
         System.out.println("Welcome to hangman!");
         Scanner scanner = new Scanner(System.in);
         String[] difficulties = new String[]{"easy", "medium", "hard"};
-        String difficultyString = userStringChoices(scanner, "What difficulty? (easy/medium/hard)(Evil)", difficulties);
-        if (difficultyString.equals("easy")) {
-            return 0;
-        } else if (difficultyString.equals("medium")) {
-            return 1;
-        } else if (difficultyString.equals("hard")) {
+        int wordLength = Integer.parseInt(userStringChoices(scanner, "What length? (Evil)", difficulties));
+        // if (difficultyString.equals("easy")) {
+        //     return 0;
+        // } else if (difficultyString.equals("medium")) {
+        //     return 1;
+        // } else if (difficultyString.equals("hard")) {
 
 
-            return 2;
-        } else {
-            return 3;
-        }
+        //     return 2;
+        // } else {
+        //     return 3;
+        // }
+        return wordLength;
     }
 
     public static String createBlankWord(int length) {
@@ -89,11 +90,12 @@ public class Game {
     }
 
     public static int guessing(int difficulty, Hangman man) throws IOException {
-        if (difficulty != 3) {
+        if (difficulty <= 29) {
             RandomNum numObj = new RandomNum();
             int num = numObj.numAccessor();
             WordPicker wordObj = new WordPicker(num, difficulty);
             String word = wordObj.accessWord().toUpperCase();
+            //ArrayList<String> words = 
             String[] letters = word.split("");
             System.out.println(word);
             String blankWord = createBlankWord(word.length());
