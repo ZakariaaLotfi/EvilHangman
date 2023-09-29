@@ -6,6 +6,7 @@ public class EvilHangman {
     private ArrayList<String> words;
     private String displayWord;
     private int remainingGuesses;
+    //private String blankWord = Game.createBlankWord(wordLength);
 
     public EvilHangman(String filename, int wordLength, int guesses) {
         words = new ArrayList<>();
@@ -21,8 +22,10 @@ public class EvilHangman {
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-
+        }
     }
-    String blankWord = Game.createBlankWord(wordLength);
-}}
+    public ArrayList<String> wordsAccessor(){
+        return words;
+    }
+}
 
