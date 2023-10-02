@@ -18,7 +18,7 @@ public class WordPicker {
         difficultyToLength.put(0, new int[]{3, 4});
         difficultyToLength.put(1, new int[]{5, 6});
         difficultyToLength.put(2, new int[]{7, 8});
-        word = pickWord(amount, difficulty);
+        String word = pickWord(amount, difficulty);
     }
 
     public String pickWord(String answer, int amount, int difficulty) throws IOException {
@@ -66,7 +66,7 @@ public class WordPicker {
         return words;
     }
 
-    // public String accessWord() {
-    //     return word;
-    // }
+    public String accessWord() {
+        return word;
+    }
 }
