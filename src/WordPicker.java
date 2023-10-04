@@ -4,28 +4,31 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.security.SecureRandom;
 import java.util.Scanner;
 
 public class WordPicker {
     //private String word;
-    private Map<Integer, int[]> difficultyToLength = new HashMap<>();
+    // private Map<Integer, int[]> difficultyToLength = new HashMap<>();
     private ArrayList<String> words;
     private String displayWord;
     private int remainingGuesses;
 
-    public WordPicker(int amount, int difficulty) throws IOException {
-        difficultyToLength.put(0, new int[]{3, 4});
-        difficultyToLength.put(1, new int[]{5, 6});
-        difficultyToLength.put(2, new int[]{7, 8});
-        word = pickWord(amount, difficulty);
+    public WordPicker(int answer, int difficulty) throws IOException {
+        String word = pickInitialWord(answer, difficulty);
     }
 
-    public String pickWord(String answer, int amount, int difficulty) throws IOException {
+    public String pickInitialWord(int answer, int difficulty){//, int amount, int difficulty) throws IOException {
         File file = new File("src/words.txt");
         if (!file.exists()) {
             throw new FileNotFoundException("File not found: " + file.getAbsolutePath());
         }
+        DecisionTree decisionTree = new DecisionTree();
+        HashMap<String, List<String>> wordMap = decisionTree.makeFamilies(words);
+        String word;
+        for ()
+
         // try (Scanner scanner = new Scanner(file)) {
         //     String tempWord = null;
         //     String word = null;

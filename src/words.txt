@@ -4307,7 +4307,6 @@ anticly
 antics
 antidepressant
 antidepressants
-antidisestablishmentarianism
 antidotal
 antidotally
 antidote
@@ -21238,7 +21237,6 @@ comparting
 compartment
 compartmental
 compartmentalization
-compartmentalizations
 compartmentalize
 compartmentalized
 compartmentalizes
@@ -24053,10 +24051,8 @@ counterproductive
 counterproposal
 counterproposals
 counterrevolution
-counterrevolutionaries
 counterrevolutionary
 counterrevolutionist
-counterrevolutionists
 counterrevolutions
 counters
 countersign
@@ -34916,7 +34912,6 @@ electrocardiogram
 electrocardiograms
 electrocardiograph
 electrocardiographic
-electrocardiographically
 electrocardiographs
 electrocardiography
 electrochemical
@@ -37563,8 +37558,6 @@ establishes
 establishing
 establishment
 establishmentarian
-establishmentarianism
-establishmentarianisms
 establishmentarians
 establishments
 estancia
@@ -42242,7 +42235,6 @@ floaty
 floc
 flocced
 flocci
-floccinaucinihilipilification
 floccing
 floccose
 flocculate
@@ -55509,7 +55501,6 @@ incomplete
 incompletely
 incompleteness
 incompliant
-incomprehensibilities
 incomprehensibility
 incomprehensible
 incomprehensibleness
@@ -55977,7 +55968,6 @@ indistinctly
 indistinctness
 indistinguishability
 indistinguishable
-indistinguishableness
 indistinguishably
 indite
 indited
@@ -57617,7 +57607,6 @@ intercut
 intercuts
 intercutting
 interdenominational
-interdenominationalism
 interdepartmental
 interdepartmentally
 interdependence
@@ -117664,7 +117653,6 @@ ultramicroscopes
 ultramicroscopic
 ultraminiature
 ultraminiaturization
-ultraminiaturizations
 ultramodern
 ultramodernist
 ultramodernists

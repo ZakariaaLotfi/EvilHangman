@@ -23,13 +23,35 @@ public class Game {
         return blankWord;
     }
 
+    public static boolean isNumeric(String str) { 
+        try {  
+          Double.parseDouble(str);  
+          return true;
+        } catch(NumberFormatException e){  
+          return false;  
+        }  
+    }
+
+    public static int userIntChoices(Scanner s, String question, int[] possibleAnswers) {
+        String answer;
+        while (true) {
+            System.out.println(question);
+            answer = s.nextLine().toLowerCase();
+            for (int i: possibleAnswers) {
+                if (isNumeric(answer)) {
+                    if (Integer.parseInt(answer)==i) return Integer.parseInt(answer);
+                }
+            }
+        }
+    }
+
     public static String userStringChoices(Scanner s, String question, String[] possibleAnswers) {
         String answer;
         while (true) {
             System.out.println(question);
             answer = s.nextLine().toLowerCase();
-            for (int i = 0; i < possibleAnswers.length; i++) {
-                if (answer.equals(possibleAnswers[i])) {
+            for (String i:possibleAnswers) {
+                if (i.equals(answer)) {
                     return answer;
                 }
             }
@@ -64,8 +86,8 @@ public class Game {
     public static int intro() {
         System.out.println("Welcome to hangman!");
         Scanner scanner = new Scanner(System.in);
-        String[] difficulties = new String[]{"easy", "medium", "hard"};
-        int wordLength = Integer.parseInt(userStringChoices(scanner, "What length? (Evil)", difficulties));
+        int[] lengths = new int[]{2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+        int wordLength = userIntChoices(scanner, "What length? (Evil)", lengths);
         // if (difficultyString.equals("easy")) {
         //     return 0;
         // } else if (difficultyString.equals("medium")) {
@@ -90,7 +112,7 @@ public class Game {
     }
 
     public static int guessing(int difficulty, Hangman man) throws IOException {
-        if (difficulty <= 29) {
+        if (difficulty <= 20) {
             RandomNum numObj = new RandomNum();
             int num = numObj.numAccessor();
             WordPicker wordObj = new WordPicker(num, difficulty);
@@ -151,7 +173,7 @@ public class Game {
         int victoryStatus = guessing(difficulty, man);
         System.out.println(man.stageAccessor()+"\n");
         if (victoryStatus==1){
-            System.out.println("You won. yay.");
+            System.out.println(88+"You won. yay."+88);
         }else if(victoryStatus==0){
             System.out.println("WOMP WOMP. YOU LOSE!");
         }
