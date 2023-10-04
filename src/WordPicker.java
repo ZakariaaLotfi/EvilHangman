@@ -69,7 +69,7 @@ public class WordPicker {
         return words;
     }
 
-    // public String accessWord() {
-    //     return word;
-    // }
+    public String accessWord() {
+        return word;
+    }
 }

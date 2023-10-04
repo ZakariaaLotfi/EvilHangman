@@ -116,7 +116,7 @@ public class Game {
             RandomNum numObj = new RandomNum();
             int num = numObj.numAccessor();
             WordPicker wordObj = new WordPicker(num, difficulty);
-            String word = wordObj.accessWord().toUpperCase();
+            String word = wordObj.word.toUpperCase();
             //ArrayList<String> words = 
             String[] letters = word.split("");
             System.out.println(word);

@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DecisionTree
 {
     
     public HashMap<String, List<String>> makeFamilies(String answer, ArrayList<String> list) {
         HashMap<String, List<String>> wordFamilies = new HashMap<>();
+
         String key;
         for (String word: list) {
             key = "";

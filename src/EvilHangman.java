@@ -24,6 +24,9 @@ public class EvilHangman {
             e.printStackTrace();
         }
     }
+    public EvilHangman() {
+        System.out.println("Forgot parameters for evilhangman bozo");
+    }
     public ArrayList<String> wordsAccessor(){
         return words;
     }
