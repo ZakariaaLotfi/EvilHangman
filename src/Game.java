@@ -23,13 +23,13 @@ public class Game {
         return blankWord;
     }
 
-    public static boolean isNumeric(String str) { 
-        try {  
-          Double.parseDouble(str);  
-          return true;
-        } catch(NumberFormatException e){  
-          return false;  
-        }  
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e) {
+            return false;
+        }
     }
 
     public static int userIntChoices(Scanner s, String question, int[] possibleAnswers) {
@@ -39,7 +39,7 @@ public class Game {
             answer = s.nextLine().toLowerCase();
             for (int i: possibleAnswers) {
                 if (isNumeric(answer)) {
-                    if (Integer.parseInt(answer)==i) return Integer.parseInt(answer);
+                    if (Integer.parseInt(answer) == i) return Integer.parseInt(answer);
                 }
             }
         }
@@ -50,7 +50,7 @@ public class Game {
         while (true) {
             System.out.println(question);
             answer = s.nextLine().toLowerCase();
-            for (String i:possibleAnswers) {
+            for (String i: possibleAnswers) {
                 if (i.equals(answer)) {
                     return answer;
                 }
@@ -86,19 +86,8 @@ public class Game {
     public static int intro() {
         System.out.println("Welcome to hangman!");
         Scanner scanner = new Scanner(System.in);
-        int[] lengths = new int[]{2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+        int[] lengths = new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
         int wordLength = userIntChoices(scanner, "What length? (Evil)", lengths);
-        // if (difficultyString.equals("easy")) {
-        //     return 0;
-        // } else if (difficultyString.equals("medium")) {
-        //     return 1;
-        // } else if (difficultyString.equals("hard")) {
-
-
-        //     return 2;
-        // } else {
-        //     return 3;
-        // }
         return wordLength;
     }
 
@@ -117,7 +106,6 @@ public class Game {
             int num = numObj.numAccessor();
             WordPicker wordObj = new WordPicker(num, difficulty);
             String word = wordObj.word.toUpperCase();
-            //ArrayList<String> words = 
             String[] letters = word.split("");
             System.out.println(word);
             String blankWord = createBlankWord(word.length());
@@ -162,19 +150,18 @@ public class Game {
                     return 0;
                 }
             }
-            s.close();
             return 1;
         }
         return difficulty;
     }
 
-    public void game(Hangman man) throws IOException{
+    public void game(Hangman man) throws IOException {
         int difficulty = intro();
         int victoryStatus = guessing(difficulty, man);
-        System.out.println(man.stageAccessor()+"\n");
-        if (victoryStatus==1){
-            System.out.println(88+"You won. yay."+88);
-        }else if(victoryStatus==0){
+        System.out.println(man.stageAccessor() + "\n");
+        if (victoryStatus == 1) {
+            System.out.println(88 + "You won. yay." + 88);
+        } else if (victoryStatus == 0) {
             System.out.println("WOMP WOMP. YOU LOSE!");
         }
     }
