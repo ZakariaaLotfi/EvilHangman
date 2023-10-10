@@ -1,77 +1,54 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.security.SecureRandom;
 import java.util.Scanner;
 
 public class WordPicker {
-    //private String word;
-    // private Map<Integer, int[]> difficultyToLength = new HashMap<>();
+    private String word;
     private ArrayList<String> words;
-    private String displayWord;
-    private int remainingGuesses;
 
-    public WordPicker(int difficulty) throws IOException {
-        String word = pickInitialWord(difficulty);
+    public WordPicker(int length) throws IOException {
+        word = pickInitialWord(length);
     }
-    public WordPicker(HashMap<String, List<String>> families){
-        String word = pickWord(families);
+    public WordPicker(String answer) throws IOException {
+        word = pickWord(answer);
     }
 
-    public String pickInitialWord(int difficulty){//, int amount, int difficulty) throws IOException {
-        ArrayList<String> words = new ArrayList<String>();
+    public String pickInitialWord(int length)throws IOException {
         File file = new File("src/words.txt");
         if (!file.exists()) {
             throw new FileNotFoundException("File not found: " + file.getAbsolutePath());
         }
-        try (Scanner scanner = new Scanner(file)) {
-            String tempWord = null;
-            String word = null;
-            // for (int i = 0; i < amount; i++) {
-            //     if (!scanner.hasNextLine()) {
-            //         throw new IllegalArgumentException("Not enough words in the file: " + file.getAbsolutePath());
-            //     }
-            //     tempWord = scanner.nextLine();
-            //     if (tempWord.length() == length){
-            //         word = tempWord;
-            //     }
-            // }
-            while (scanner.hasNextLine()){
-                word = scanner.nextLine();
-                if (word.length()==difficulty) words.add(word);
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()){
+            word = scanner.nextLine();
+            if (word.length()==length){
+                words.add(word);
             }
-            int length = 0;
-            for (String w:words){
-                length = w.length();
-            }
-            
-            return word;
         }
+        SecureRandom secure = new SecureRandom();
+        int randomnum = secure.nextInt(words.size() -1);
+        scanner.close();
+        return(words.get(randomnum));
     }
-    public void EvilWords(int wordLength) {
-        words = new ArrayList<>();
-        try {
-            File file = new File("src/words.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String word = scanner.nextLine();
-                if (word.length() == wordLength) {
-                    words.add(word);
-                }
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    
+    public String pickWord(String answer) {
+        DecisionTree decisionTree = new DecisionTree();
+        HashMap<String, ArrayList<String>> families = decisionTree.makeFamilies(answer, words);
+        words.clear();
+        families.forEach((i, j) -> {
+            if (j.size()>words.size()) words = j;
+        }); 
+        word = "";
+        words.forEach((i) -> {
+            if (i.length()>word.length()) word = i;
+        });
+        return word;
     }
-    public ArrayList<String> wordsAccessor(){
-        return words;
-    }
-
+    
     public String accessWord() {
         return word;
     }
