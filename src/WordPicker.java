@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.security.SecureRandom;
 import java.util.Scanner;
+import java.util.Set;
 
 public class WordPicker {
     private String word;
     private ArrayList<String> words;
+    private ArrayList<String> keys = new ArrayList<>();
 
     public WordPicker(int length) throws IOException {
         word = pickInitialWord(length);
@@ -38,6 +40,9 @@ public class WordPicker {
     public String pickWord(String answer) {
         DecisionTree decisionTree = new DecisionTree();
         HashMap<String, ArrayList<String>> families = decisionTree.makeFamilies(answer, words);
+        keys.clear();
+        ArrayList<String> keyList = new ArrayList<String>(families.keySet());
+        keys = keyList;
         words.clear();
         families.forEach((i, j) -> {
             if (j.size()>words.size()) words = j;
@@ -51,5 +56,8 @@ public class WordPicker {
     
     public String accessWord() {
         return word;
+    }
+    public ArrayList<String> accessKeys(){
+        return keys;
     }
 }

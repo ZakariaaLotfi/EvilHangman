@@ -93,13 +93,9 @@ public class Game {
         return word;
     }
 
-    public static String createBlankWord(String word) {
-        String blankWord = "";
-        for (int i = 0; i < word.length(); i++) {
-            blankWord += "_ ";
-        }
-        blankWord = blankWord.substring(0, blankWord.length() - 1);
-        return blankWord;
+    public static String createBlankWord(String word, ArrayList<String> keys) {
+        BlankWord blankWord = new BlankWord();
+        String blankword = blankWord.createBlankWord(word, keys);
     }
 
     public static int guessing(String word, Hangman man) throws IOException {
@@ -157,7 +153,7 @@ public class Game {
         boolean done = false;
         String stage = man.newStage();
         BlankWord blankWordMaker = new BlankWord();
-        
+
         while (!done){
 
             module(man);
