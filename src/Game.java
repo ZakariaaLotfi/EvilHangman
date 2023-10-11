@@ -151,7 +151,24 @@ public class Game {
         //     return 1;
         // }
         // return difficulty;
+        DecisionTree decisionTree = new DecisionTree();
+        Scanner sc = new Scanner(System.in);
+        word = intro();
+        boolean done = false;
+        String stage = man.newStage();
+        BlankWord blankWordMaker = new BlankWord();
+        
+        while (!done){
 
+            module(man);
+        }
+    }
+
+    public static void module(Hangman man, String stage, String blankWord){
+        System.out.println(stage);
+        System.out.println();
+        System.out.println(blankWord);
+        System.out.println("Enter a letter");
     }
 
     public void game(Hangman man) throws IOException {

@@ -3,7 +3,6 @@ import java.util.HashMap;
 
 public class DecisionTree
 {
-    
     public HashMap<String, ArrayList<String>> makeFamilies(String answer, ArrayList<String> list) {
         HashMap<String, ArrayList<String>> wordFamilies = new HashMap<>();
         String key;
