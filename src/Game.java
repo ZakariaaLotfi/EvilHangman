@@ -83,20 +83,22 @@ public class Game {
         return 2;
     }
 
-    public static String intro() throws IOException {
+    public static String[] intro() throws IOException {
         System.out.println("Welcome to hangman!");
         Scanner scanner = new Scanner(System.in);
         int[] lengths = new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
         int wordLength = userIntChoices(scanner, "What length? (Evil)", lengths);
         WordPicker wordPicker = new WordPicker(wordLength);
         String word = wordPicker.accessWord();
-        return word;
+        String blankWord = wordPicker.accessBlankWord();
+        String[] wordBlankWord = new String[]{word, blankWord};
+        return wordBlankWord;
     }
 
-    public static String createBlankWord(String word, ArrayList<String> keys) {
-        BlankWord blankWord = new BlankWord();
-        String blankword = blankWord.createBlankWord(word, keys);
-    }
+    // public static String createBlankWord(String word, ArrayList<String> keys) {
+    //     BlankWord blankWord = new BlankWord();
+    //     String blankword = blankWord.createBlankWord(word, keys);
+    // }
 
     public static int guessing(String word, Hangman man) throws IOException {
         // if (difficulty <= 20) {
