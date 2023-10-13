@@ -25,6 +25,7 @@ public class DecisionTree
                 wordFamilies.put(key, wordsInFamily);
             }
         }
+        System.out.println("Heyhey"+wordFamilies);
         return wordFamilies;
     }
 }

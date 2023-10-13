@@ -116,7 +116,7 @@ public class Game {
         ArrayList<String> letters = new ArrayList<>();
         System.out.println(letters);
         for (int i = 0; i < word.length(); i++) {
-                letters.add(word.charAt(i)+"");
+            letters.add(word.charAt(i)+"");
         }
         String[] alph = "abcdefghijklmnopqrstuvwxyz".split("");
         String answer = userStringChoices(scanner, "Enter a letter:", alph);
