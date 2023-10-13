@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 public class WordPicker {
     private String word;
-    private ArrayList<String> words;
+    private ArrayList<String> words = new ArrayList<>();
     private ArrayList<String> keys = new ArrayList<>();
     private String blankWord = "";
 
@@ -87,9 +87,13 @@ public class WordPicker {
             }
             blankWord = blankword.toString();
         }else{
+            System.out.println("jjjj");
+            System.out.println(word.length());
             for (int i=0; i<word.length(); i++){
                 blankWord += "_ ";
+                System.out.println("k");
             }
+            System.out.println(blankWord);
         }
         blankWord = blankWord.substring(0, blankWord.length() - 1);
         return blankWord;

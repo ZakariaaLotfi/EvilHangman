@@ -51,7 +51,7 @@ public class Game {
         String answer;
         while (true) {
             System.out.println(question);
-            answer = s.nextLine().toLowerCase();
+            answer = s.nextLine();
             for (String i: possibleAnswers) {
                 if (i.equals(answer)) {
                     return answer;
@@ -60,72 +60,77 @@ public class Game {
         }
     }
 
-    public static int checkLetter(Scanner s, String answer, ArrayList<String> letters, ArrayList<String> alph) {
-        if (alph.contains(answer.toUpperCase())) {
-            int inWord = 0;
-            for (String i : letters) {
-                System.out.println(i);
-                if (answer.equals(i)) {
-                    inWord = 1;
-                    break;
-                }
+    public static int checkLetter(Scanner s, String answer, ArrayList<String> letters) {
+        int inWord = 0;
+        for (String i : letters) {
+            System.out.println(i);
+            if (answer.equals(i)) {
+                inWord = 1;
+                break;
             }
-            if (inWord == 0) {
-                return 0;
-            }
-            return 1;
         }
-        return 2;
+        if (inWord == 0) {
+            return 0;
+        }
+        return 1;
     }
 
-    public static String[] intro() throws IOException {
+    public static int intro() throws IOException {
         System.out.println("Welcome to hangman!");
         Scanner scanner = new Scanner(System.in);
         int[] lengths = new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
         int wordLength = userIntChoices(scanner, "What length? (Evil)", lengths);
+        return wordLength;
+    }
+
+    public static int guessing(int wordLength, Hangman man) throws IOException {
         WordPicker wordPicker = new WordPicker(wordLength);
         String word = wordPicker.accessWord();
         String blankWord = wordPicker.accessBlankWord();
-        String[] wordBlankWord = new String[]{word, blankWord};
-        return wordBlankWord;
-    }
-
-    // public static String createBlankWord(String word, ArrayList<String> keys) {
-    //     BlankWord blankWord = new BlankWord();
-    //     String blankword = blankWord.createBlankWord(word, keys);
-    // }
-
-    public static int guessing(String[] wordBlankWord, Hangman man) throws IOException {
-
-        boolean done = false;
+        boolean won = false;
         String stage = man.newStage();
-
-        while (!done){
-
-            module(man, stage, wordBlankWord);
+        while (!won){
+            if (!blankWord.contains(" ")) won=true;
+            if (man.livesAccessor()==0) return 0;
+            clearScreen();
+            ArrayList<Object> answerAndCorrect = module(man, stage, word, blankWord);
+            int correct = (int)(answerAndCorrect.get(1));
+            String answer = answerAndCorrect.get(0).toString();
+            if (correct==1){
+                wordPicker = new WordPicker(answer);
+                word = wordPicker.accessWord();
+                blankWord = wordPicker.accessBlankWord();
+            }else{
+                stage = man.newStage();
+            }
         }
-
+        return 1;
     }
 
-    public static void module(Hangman man, String stage, ArrayList<String> wordBlankWord){
-
+    public static ArrayList<Object> module(Hangman man, String stage, String word, String blankWord){
         Scanner scanner = new Scanner(System.in);
         System.out.println(stage);
         System.out.println();
-        System.out.println(wordBlankWord.get(1));
+        System.out.println(blankWord);
+        System.out.println(word);
         ArrayList<String> letters = new ArrayList<>();
-        for (int i = 0; i < wordBlankWord.get(0).length(); i++) {
-                letters.add(wordBlankWord.get(0).charAt(i)+"");
+        System.out.println(letters);
+        for (int i = 0; i < word.length(); i++) {
+                letters.add(word.charAt(i)+"");
         }
-        String[] alph = new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-        String answer = userStringChoices(scanner, "Enter a letter:",alph);
-        int correct = checkLetter(scanner, answer, letters, alph);
-
+        String[] alph = "abcdefghijklmnopqrstuvwxyz".split("");
+        String answer = userStringChoices(scanner, "Enter a letter:", alph);
+        System.out.println("sjkkw");
+        Integer correct = checkLetter(scanner, answer, letters);
+        ArrayList<Object> answerAndCorrect = new ArrayList<Object>();
+        answerAndCorrect.add(answer);
+        answerAndCorrect.add(correct);
+        return answerAndCorrect;
     }
 
     public void game(Hangman man) throws IOException {
-        String[] word = intro();
-        int victoryStatus = guessing(word, man);
+        int wordLength = intro();
+        int victoryStatus = guessing(wordLength, man);
         System.out.println(man.stageAccessor() + "\n");
         if (victoryStatus == 1) {
             System.out.println(88 + "You won. yay." + 88);
