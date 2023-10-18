@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.security.SecureRandom;
 import java.util.Scanner;
+import java.security.SecureRandom;
 
 public class WordPicker {
     private static String word;
@@ -61,49 +62,44 @@ public class WordPicker {
                 break;
             }
         }
-        word = "";
-        words.forEach((i) -> {
-            if (i.length()>word.length()) word = i;
-        });
+        SecureRandom rand = new SecureRandom();
+        word = words.get(rand.nextInt(words.size()));
         System.out.println("Word is: "+word);
         System.out.println("Words is: "+words);
         return word;
     }
-
+    public static ArrayList<String> splitArrayList(ArrayList<String> keys){
+        ArrayList<String> key = new ArrayList<String>();
+        for (int i=0; i<keys.size();i++){
+            Collections.addAll(key, keys.get(i).split(""));
+        }
+        return key;
+    }
+    public String addSpaces(StringBuilder strB, String blankWord){
+        for (int i=0; i<strB.length()-1; i++) if (i%2==1) strB.insert(i, " ");
+        return strB.toString();
+    }
     public String createBlankWord(String word, ArrayList<String> keys) {
         if (keys.size()>0){
-            StringBuilder blankword = new StringBuilder("");
+            StringBuilder blankWordBuilder = new StringBuilder("");
             blankWord = "";
-            String letter = "";
-            for (int i=0; i<keys.size();i++){
-                ArrayList<String> key = new ArrayList<String>();
-                Collections.addAll(key, keys.get(i).split(""));
-                for (int j=1; j<key.size(); j+=2){
-                    letter = key.get(j);
-                    for (int k=0; k<word.length(); k++){
-                        String let = word.charAt(k)+"";
-                        if (let.equals(letter)){
-                            blankword.insert(k, let+" ");
-                        }else{
-                            blankword.insert(k, "_ ");
-                        }
-                    }
+            ArrayList<String> key = new ArrayList<String>();
+            key = splitArrayList(keys);
+            for (int k=0; k<word.length(); k++){
+                String let = word.charAt(k)+"";
+                if (key.contains(let)){
+                    blankWordBuilder.insert(k, let);
+                }else{
+                    blankWordBuilder.insert(k, "_ ");
                 }
             }
-            blankWord = blankword.toString();
+            blankWord = addSpaces(blankWordBuilder, word);
         }else{
-            System.out.println("jjjj");
-            System.out.println(word.length());
-            for (int i=0; i<word.length(); i++){
-                blankWord += "_ ";
-                System.out.println("k");
-            }
-            System.out.println("jjhjj"+blankWord);
+            for (int i=0; i<word.length(); i++) blankWord += "_ ";
         }
         blankWord = blankWord.substring(0, blankWord.length() - 1);
         return blankWord;
     }
-    
     public String accessWord() {
         return word;
     }
