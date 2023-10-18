@@ -103,6 +103,7 @@ public class Game {
             }else{
                 stage = man.newStage();
             }
+            if (!blankWord.contains("_")) won = true;
         }
         return 1;
     }
@@ -131,6 +132,7 @@ public class Game {
     public void game(Hangman man) throws IOException {
         int wordLength = intro();
         int victoryStatus = guessing(wordLength, man);
+        clearScreen();
         System.out.println(man.stageAccessor() + "\n");
         if (victoryStatus == 1) {
             System.out.println(88 + "You won. yay." + 88);
