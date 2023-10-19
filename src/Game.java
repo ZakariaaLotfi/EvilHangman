@@ -5,10 +5,21 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Game {
+
+   private static ArrayList<String> chosen = new ArrayList<String>();
+
     public Game() throws IOException {
         Hangman man = new Hangman();
         game(man);
     }
+
+    public static void addToArrayList(String item) {
+        chosen.add(item);
+        for (String string : chosen) {
+            System.out.print("Letters picked: " + string + " ");
+        }
+    }
+
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -47,11 +58,14 @@ public class Game {
         }
     }
 
-    public static String userStringChoices(Scanner s, String question, String[] possibleAnswers) {
+    public static String userStringChoices(Scanner s, String question, String[] possibleAnswers)  {
         String answer;
         while (true) {
             System.out.println(question);
             answer = s.nextLine();
+            addToArrayList(answer);
+
+
             for (String i: possibleAnswers) {
                 if (i.equals(answer)) {
                     return answer;
@@ -121,7 +135,6 @@ public class Game {
         }
         String[] alph = "abcdefghijklmnopqrstuvwxyz".split("");
         String answer = userStringChoices(scanner, "Enter a letter:", alph);
-        System.out.println("sjkkw");
         Integer correct = checkLetter(scanner, answer, letters);
         ArrayList<Object> answerAndCorrect = new ArrayList<Object>();
         answerAndCorrect.add(answer);
