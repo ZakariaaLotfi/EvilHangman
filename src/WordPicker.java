@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.security.SecureRandom;
 import java.util.Scanner;
-import java.security.SecureRandom;
 
 public class WordPicker {
     private static String word;
@@ -22,15 +21,6 @@ public class WordPicker {
         word = pickWord(answer);
         blankWord = createBlankWord(word, keys);
     }
-    // public void initialRun(int length) throws IOException{
-    //     word = pickInitialWord(length);
-    //     blankWord = createBlankWord(word, keys);
-    // }
-    // public void run(String answer) throws IOException{
-    //     word = pickWord(answer);
-    //     System.out.println("ihjqefgbiwyqf::"+word);
-    //     blankWord = createBlankWord(word, keys);
-    // }
     public String pickInitialWord(int length) throws IOException {
         File file = new File("src/words.txt");
         if (!file.exists()) {

@@ -113,7 +113,7 @@ public class Game {
         System.out.println(stage);
         System.out.println();
         System.out.println(blankWord);
-        System.out.println(word);
+        //System.out.println(word);
         ArrayList<String> letters = new ArrayList<>();
         System.out.println(letters);
         for (int i = 0; i < word.length(); i++) {
