@@ -26,6 +26,14 @@ public class Game {
         game(man);
     }
 
+    public static void addToArrayList(String item) {
+        chosen.add(item);
+        for (String string : chosen) {
+            System.out.print("Letters picked: " + string + " ");
+        }
+    }
+
+
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
