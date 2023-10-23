@@ -54,8 +54,8 @@ public class WordPicker {
         }
         SecureRandom rand = new SecureRandom();
         word = words.get(rand.nextInt(words.size()));
-        System.out.println("Word is: "+word);
-        System.out.println("Words is: "+words);
+        // System.out.println("Word is: "+word);
+        // System.out.println("Words is: "+words);
         return word;
     }
     public static ArrayList<String> splitArrayList(ArrayList<String> keys){
@@ -98,5 +98,8 @@ public class WordPicker {
     }
     public String accessBlankWord(){
         return blankWord;
+    }
+    public ArrayList<String> accessWords(){
+        return words;
     }
 }
