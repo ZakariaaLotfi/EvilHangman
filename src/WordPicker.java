@@ -44,13 +44,21 @@ public class WordPicker {
         System.out.println("jjqq"+words);
         HashMap<String, ArrayList<String>> families = decisionTree.makeFamilies(answer, words);
         ArrayList<String> keyList = new ArrayList<>(families.keySet());
+        int length = 0;
+        String str = "";
         for (String i: keyList){
-            if (families.get(i).contains(word)){
-                keys.add(i);
+            if (families.get(i).size()>length){
+                length = families.get(i).size();
                 words = families.get(i);
-                break;
+                str = i;
             }
+            // if (families.get(i).contains(word)){
+            //     keys.add(i);
+            //     words = families.get(i);
+            //     break;
+            // }
         }
+        keys.add(str);
         SecureRandom rand = new SecureRandom();
         word = words.get(rand.nextInt(words.size()));
         // System.out.println("Word is: "+word);

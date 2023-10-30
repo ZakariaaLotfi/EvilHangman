@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,6 +13,7 @@ public class Game {
     private static ArrayList<String> alph = new ArrayList<String>(Arrays.asList(lAlph));
     private static ArrayList<String> chosenList = new ArrayList<String>();
     private static String word;
+    private static Set<String> allWords = new HashSet<String>();
     //private static ArrayList<String> tempChosen = new ArrayList<String>();
 
     public static void setChosen(HashSet<String> chosen, ArrayList<String> alph, String answer){
@@ -104,6 +106,7 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         int[] lengths = new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
         int wordLength = userIntChoices(scanner, "What length? (2-20)", lengths);
+        int lives = userIntChoices(scanner, "How many lives? (1-25)", lengths);
         return wordLength;
     }
 
@@ -133,6 +136,7 @@ public class Game {
     }
 
     public static ArrayList<Object> module(Scanner scanner, Hangman man, String stage, String word, String blankWord, WordPicker wordPicker){
+        allWords.add(word);
         System.out.println(stage);
         System.out.println();
         System.out.println(blankWord);
@@ -160,7 +164,9 @@ public class Game {
         int victoryStatus = guessing(scanner, wordLength, man);
         clearScreen();
         System.out.println(man.stageAccessor() + "\n");
-        System.out.println("Word: "+word);
+        ArrayList<String> allWordsL = new ArrayList<>(allWords);
+        //Collections.sort(allWordsL);
+        System.out.println("Words: "+allWords);
         if (victoryStatus == 1) {
             System.out.println(88 + " You won. yay. " + 88);
         } else if (victoryStatus == 0) {
