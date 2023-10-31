@@ -1,10 +1,12 @@
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.Set;
+//import java.util.Set;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import javax.sound.sampled.*;
 
 public class Game {
     private static HashSet<String> chosen = new HashSet<String>();
@@ -112,6 +114,13 @@ public class Game {
         int wordLength = userIntChoices(scanner, "What length? (2-20)", lengths);
         int lives = userIntChoices(scanner, "How many lives? (1-25)", livesA);
         return new int[]{wordLength, lives};
+    }
+
+    public static void playMusic() throws UnsupportedAudioFileException, IOException, LineUnavailableException{
+        File file = new File("At Doom's Gate.mp3");
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
     }
 
     public static int guessing(Scanner scanner, int wordLength, Hangman man, int lives) throws IOException {
