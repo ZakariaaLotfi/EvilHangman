@@ -51,17 +51,10 @@ public class WordPicker {
                 words = families.get(i);
                 str = i;
             }
-            // if (families.get(i).contains(word)){
-            //     keys.add(i);
-            //     words = families.get(i);
-            //     break;
-            // }
         }
         keys.add(str);
         SecureRandom rand = new SecureRandom();
         word = words.get(rand.nextInt(words.size()));
-        // System.out.println("Word is: "+word);
-        // System.out.println("Words is: "+words);
         return word;
     }
     public static ArrayList<String> splitArrayList(ArrayList<String> keys){
@@ -86,14 +79,13 @@ public class WordPicker {
                 if (key.contains(let)){
                     blankWordBuilder.insert(k, let);
                 }else{
-                    blankWordBuilder.insert(k, "_ ");
+                    blankWordBuilder.insert(k, "_");
                 }
             }
-            blankWord = addSpaces(blankWordBuilder, word);
+            blankWord = blankWordBuilder.toString();
         }else{
-            for (int i=0; i<word.length(); i++) blankWord += "_ ";
+            for (int i=0; i<word.length(); i++) blankWord += "_";
         }
-        blankWord = blankWord.substring(0, blankWord.length() - 1);
         return blankWord;
     }
     public String accessWord() {
