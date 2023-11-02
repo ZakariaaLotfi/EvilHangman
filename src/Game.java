@@ -91,7 +91,6 @@ public class Game {
     public static int checkLetter(Scanner s, String answer, ArrayList<String> letters) {
         int inWord = 0;
         for (String i : letters) {
-            System.out.println(i);
             if (answer.equals(i)) {
                 inWord = 1;
                 break;
@@ -136,21 +135,16 @@ public class Game {
             clearScreen();
             ArrayList<Object> ansCorrectBlank = module(scanner, man, stage, word, blankWord, wordPicker, lives, prevBlank);
             String answer = ansCorrectBlank.get(0).toString();
+            wordPicker = new WordPicker(answer);
+            word = wordPicker.accessWord();
+            blankWord = wordPicker.accessBlankWord();
             boolean correct = (boolean) ansCorrectBlank.get(1);
-            System.out.println("llllll"+correct);
-            prevBlank = ansCorrectBlank.get(2).toString();
-            if (correct){
-                wordPicker = new WordPicker(answer);
-                word = wordPicker.accessWord();
-                blankWord = wordPicker.accessBlankWord();
-            }else{
-                //stage = man.newStage();
+            //prevBlank = blankWord;
+            if (!correct){
                 lives--;
-                wordPicker = new WordPicker(answer);
-                word = wordPicker.accessWord();
-                blankWord = wordPicker.accessBlankWord();
             }
             if (!blankWord.contains("_")) won = true;
+            prevBlank = blankWord;
         }
         return 1;
     }
@@ -170,14 +164,14 @@ public class Game {
             letters.add(word.charAt(i)+"");
         }
         System.out.println("Possible words: "+wordPicker.accessWords().size());
+        System.out.println("kkk"+prevBlank);
         answer = userStringChoices(scanner, "Enter a letter:", alph);
+        System.out.println(blankWord);
         boolean correct = !blankWord.equals(prevBlank);//checkLetter(scanner, answer, letters);
         ArrayList<Object> ansCorrectBlank = new ArrayList<Object>();
         ansCorrectBlank.add(answer);
         ansCorrectBlank.add(correct);
         ansCorrectBlank.add(blankWord);
-        System.out.println("llllll"+correct);
-        //scanner.nextLine();
         return ansCorrectBlank;
     }
 
@@ -194,9 +188,29 @@ public class Game {
         System.out.println("Words: "+allWords);
         System.out.println("Final Word: "+allWords.get(allWords.size()-1));
         if (victoryStatus == 1) {
-            System.out.println(88 + " You won. yay. " + 88);
+            String youWon = " __    __  _____       __  __                 __      __     _____       __  __     \r\n" + //
+                    "/\\ \\  /\\ \\/\\  __`\\    /\\ \\/\\ \\               /\\ \\  __/\\ \\   /\\  __`\\    /\\ \\/\\ \\    \r\n" + //
+                    "\\ `\\`\\\\/'/\\ \\ \\/\\ \\   \\ \\ \\ \\ \\              \\ \\ \\/\\ \\ \\ \\  \\ \\ \\/\\ \\   \\ \\ `\\\\ \\   \r\n" + //
+                    " `\\ `\\ /'  \\ \\ \\ \\ \\   \\ \\ \\ \\ \\              \\ \\ \\ \\ \\ \\ \\  \\ \\ \\ \\ \\   \\ \\ , ` \\  \r\n" + //
+                    "   `\\ \\ \\   \\ \\ \\_\\ \\   \\ \\ \\_\\ \\              \\ \\ \\_/ \\_\\ \\  \\ \\ \\_\\ \\   \\ \\ \\`\\ \\ \r\n" + //
+                    "     \\ \\_\\   \\ \\_____\\   \\ \\_____\\              \\ `\\___x___/   \\ \\_____\\   \\ \\_\\ \\_\\\r\n" + //
+                    "      \\/_/    \\/_____/    \\/_____/               '\\/__//__/     \\/_____/    \\/_/\\/_/";
+            System.out.println(youWon);
         } else if (victoryStatus == 0) {
-            System.out.println("WOMP WOMP. YOU LOSE!");
+            String youLost = " _        _            _          _                          _              _               _               _       \r\n" + //
+                    "/\\ \\     /\\_\\         /\\ \\       /\\_\\                       _\\ \\           /\\ \\            / /\\            /\\ \\     \r\n" + //
+                    "\\ \\ \\   / / /        /  \\ \\     / / /         _            /\\__ \\         /  \\ \\          / /  \\           \\_\\ \\    \r\n" + //
+                    " \\ \\ \\_/ / /        / /\\ \\ \\    \\ \\ \\__      /\\_\\         / /_ \\_\\       / /\\ \\ \\        / / /\\ \\__        /\\__ \\   \r\n" + //
+                    "  \\ \\___/ /        / / /\\ \\ \\    \\ \\___\\    / / /        / / /\\/_/      / / /\\ \\ \\      / / /\\ \\___\\      / /_ \\ \\  \r\n" + //
+                    "   \\ \\ \\_/        / / /  \\ \\_\\    \\__  /   / / /        / / /          / / /  \\ \\_\\     \\ \\ \\ \\/___/     / / /\\ \\ \\ \r\n" + //
+                    "    \\ \\ \\        / / /   / / /    / / /   / / /        / / /          / / /   / / /      \\ \\ \\          / / /  \\/_/ \r\n" + //
+                    "     \\ \\ \\      / / /   / / /    / / /   / / /        / / / ____     / / /   / / /   _    \\ \\ \\        / / /        \r\n" + //
+                    "      \\ \\ \\    / / /___/ / /    / / /___/ / /        / /_/_/ ___/\\  / / /___/ / /   /_/\\__/ / /       / / /         \r\n" + //
+                    "       \\ \\_\\  / / /____\\/ /    / / /____\\/ /        /_______/\\__\\/ / / /____\\/ /    \\ \\/___/ /       /_/ /          \r\n" + //
+                    "        \\/_/  \\/_________/     \\/_________/         \\_______\\/     \\/_________/      \\_____\\/        \\_\\/           \r\n" + //
+                    "                                                                                                                    \r\n" + //
+                    "";
+            System.out.println(youLost);
         }
     }
 }

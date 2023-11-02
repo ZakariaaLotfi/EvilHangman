@@ -41,7 +41,6 @@ public class WordPicker {
     
     public String pickWord(String answer) {
         DecisionTree decisionTree = new DecisionTree();
-        System.out.println("jjqq"+words);
         HashMap<String, ArrayList<String>> families = decisionTree.makeFamilies(answer, words);
         ArrayList<String> keyList = new ArrayList<>(families.keySet());
         int length = 0;
