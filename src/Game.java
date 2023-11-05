@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+
 import javax.sound.sampled.*;
 
 public class Game {
@@ -15,7 +17,7 @@ public class Game {
     private static ArrayList<String> alph = new ArrayList<String>(Arrays.asList(lAlph));
     private static ArrayList<String> chosenList = new ArrayList<String>();
     private static String word;
-    private static HashSet<String> allWords = new HashSet<String>();
+    private static LinkedHashSet<String> allWords = new LinkedHashSet<String>();
 
     public static void setChosen(HashSet<String> chosen, ArrayList<String> alph, String answer){
         chosen.add(answer);
