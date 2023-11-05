@@ -123,6 +123,7 @@ public class Game {
 
     public static int guessing(Scanner scanner, int wordLength, Hangman man, int lives) throws IOException, InterruptedException {
         WordPicker wordPicker = new WordPicker(wordLength);
+        System.out.println(wordPicker);
         word = wordPicker.accessWord();
         String blankWord = wordPicker.accessBlankWord();
         boolean won = false;

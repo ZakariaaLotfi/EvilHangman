@@ -14,14 +14,14 @@ public class WordPicker {
     private static String blankWord = "";
 
     public WordPicker(int length) throws IOException {
-        word = pickInitialWord(length);
+        word = pickWord(length);
         blankWord = createBlankWord(word, keys);
     }
     public WordPicker(String answer) throws IOException {
         word = pickWord(answer);
         blankWord = createBlankWord(word, keys);
     }
-    public String pickInitialWord(int length) throws IOException {
+    public String pickWord(int length) throws IOException {
         File file = new File("src/words.txt");
         if (!file.exists()) {
             throw new FileNotFoundException("File not found: " + file.getAbsolutePath());
