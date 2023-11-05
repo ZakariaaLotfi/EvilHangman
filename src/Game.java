@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-
 import javax.sound.sampled.*;
 
 public class Game {
@@ -26,7 +25,7 @@ public class Game {
         chosenList.remove(0);
     }
 
-    public Game() throws IOException, InterruptedException {
+    public Game() throws IOException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
         Hangman man = new Hangman();
         game(man);
     }
@@ -117,10 +116,28 @@ public class Game {
     }
 
     public static void playMusic() throws UnsupportedAudioFileException, IOException, LineUnavailableException{
-        File file = new File("At Doom's Gate.mp3");
+        Scanner sc = new Scanner(System.in);
+        File file = new File("src/At Doom's Gate.wav");
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
+        clip.start();
+        clip.loop(clip.LOOP_CONTINUOUSLY);
+        clearScreen();
+        System.out.println("\r\n" + //
+                " ____    __  __  ______   __          __  __  ______  __  __  ____             ______  __  __     \r\n" + //
+                "/\\  _`\\ /\\ \\/\\ \\/\\__  _\\ /\\ \\        /\\ \\/\\ \\/\\  _  \\/\\ \\/\\ \\/\\  _`\\   /'\\_/`\\/\\  _  \\/\\ \\/\\ \\    \r\n" + //
+                "\\ \\ \\L\\_\\ \\ \\ \\ \\/_/\\ \\/ \\ \\ \\       \\ \\ \\_\\ \\ \\ \\L\\ \\ \\ `\\\\ \\ \\ \\L\\_\\/\\      \\ \\ \\L\\ \\ \\ `\\\\ \\   \r\n" + //
+                " \\ \\  _\\L\\ \\ \\ \\ \\ \\ \\ \\  \\ \\ \\  __   \\ \\  _  \\ \\  __ \\ \\ , ` \\ \\ \\L_L\\ \\ \\__\\ \\ \\  __ \\ \\ , ` \\  \r\n" + //
+                "  \\ \\ \\L\\ \\ \\ \\_/ \\ \\_\\ \\__\\ \\ \\L\\ \\   \\ \\ \\ \\ \\ \\ \\/\\ \\ \\ \\`\\ \\ \\ \\/, \\ \\ \\_/\\ \\ \\ \\/\\ \\ \\ \\`\\ \\ \r\n" + //
+                "   \\ \\____/\\ `\\___/ /\\_____\\\\ \\____/    \\ \\_\\ \\_\\ \\_\\ \\_\\ \\_\\ \\_\\ \\____/\\ \\_\\\\ \\_\\ \\_\\ \\_\\ \\_\\ \\_\\\r\n" + //
+                "    \\/___/  `\\/__/  \\/_____/ \\/___/      \\/_/\\/_/\\/_/\\/_/\\/_/\\/_/\\/___/  \\/_/ \\/_/\\/_/\\/_/\\/_/\\/_/\r\n" + //
+                "                                                                                                  \r\n" + //
+                "                                                                                                  \r\n" + //
+                "");
+        System.out.println("Press enter to start");
+        String response = sc.nextLine();
+        clearScreen();
     }
 
     public static int guessing(Scanner scanner, int wordLength, Hangman man, int lives) throws IOException, InterruptedException {
@@ -173,8 +190,9 @@ public class Game {
         return ansCorrectBlank;
     }
 
-    public void game(Hangman man) throws IOException, InterruptedException {
+    public void game(Hangman man) throws IOException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
         Scanner scanner = new Scanner(System.in);
+        playMusic();
         int[] wordNLives = intro();
         int wordLength = wordNLives[0];
         int lives = wordNLives[1];
@@ -208,6 +226,7 @@ public class Game {
                     "                                                                                                                    \r\n" + //
                     "";
             System.out.println(youLost);
+        Thread.sleep(3000);
         }
     }
 }
