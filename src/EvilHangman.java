@@ -1,18 +1,18 @@
 import java.util.*;
 
-
 public class EvilHangman {
     int numberOfGuesses;
     private Map<String, List<String>> families = new HashMap<>();
     private List<String> currentWordList;
     private String displayWord;
     private Set<Character> guessedLetters = new HashSet<>();
+    private final int MAX_GUESSES = 10;
 
     public EvilHangman(List<String> initialWordList) {
         this.currentWordList = initialWordList;
         this.displayWord = String.join("", Collections.nCopies(initialWordList.get(0).length(), "-"));
+        this.numberOfGuesses = 0;
     }
-
     public void playGame() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to Evil Hangman! Let's start the game.");
@@ -36,6 +36,7 @@ public class EvilHangman {
 
 
     public void makeGuess(char guess) {
+        guess = Character.toLowerCase(guess);
         if (guessedLetters.contains(guess)) {
             System.out.println("You already guessed that letter!");
             return;
@@ -53,10 +54,21 @@ public class EvilHangman {
 
         String largestFamily = getLargestFamily();
         currentWordList = families.get(largestFamily);
-        displayWord = largestFamily;
+        updateDisplayWord(largestFamily, guess);
         numberOfGuesses++;
+        System.out.println("Number of possible words left: " + currentWordList.size());
 
     }
+    private void updateDisplayWord(String largestFamily, char guess) {
+        StringBuilder newDisplayWord = new StringBuilder(displayWord);
+        for (int i = 0; i < largestFamily.length(); i++) {
+            if (largestFamily.charAt(i) == guess) {
+                newDisplayWord.setCharAt(i, guess);
+            }
+        }
+        displayWord = newDisplayWord.toString();
+    }
+
 
     private String getFamily(String word, char guess) {
         StringBuilder family = new StringBuilder();
@@ -87,9 +99,8 @@ public class EvilHangman {
     }
 
     private boolean isGameOver() {
-        return isGameWon() || currentWordList.size() == 1;
+        return isGameWon() || numberOfGuesses >= MAX_GUESSES;
     }
-
     private boolean isGameWon() {
         return !displayWord.contains("-");
     }
