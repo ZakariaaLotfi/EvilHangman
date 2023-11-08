@@ -1,3 +1,6 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import java.util.*;
 
 public class EvilHangman {
@@ -9,7 +12,7 @@ public class EvilHangman {
     private int MAX_GUESSES;
     private int wordLength;
 
-    public EvilHangman(List<String> initialWordList, int wordLength, int lives) {
+    public EvilHangman(List<String> initialWordList, int wordLength, int lives) throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         this.currentWordList = initialWordList;
         this.displayWord = String.join("", Collections.nCopies(wordLength, "-"));
         this.numberOfGuesses = 0;
@@ -22,10 +25,12 @@ public class EvilHangman {
         while (!isGameOver()) {
             System.out.println("Current word: " + getDisplayWord());
             System.out.println("Used letters: " + guessedLetters);
-            System.out.println("Number of guesses: " + numberOfGuesses);
+            System.out.println("Number of guesses left: " + (MAX_GUESSES - numberOfGuesses));
             System.out.println("Enter your guess: ");
             char guess = scanner.next().charAt(0);
             makeGuess(guess);
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
         }
         if (isGameWon()) {
             System.out.println("Congratulations, you won! The word was: " + displayWord);
