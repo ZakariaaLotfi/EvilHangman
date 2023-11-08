@@ -1,12 +1,10 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-//import java.util.Set;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import javax.sound.sampled.*;
 
 public class Game {
@@ -16,7 +14,7 @@ public class Game {
     private static ArrayList<String> alph = new ArrayList<String>(Arrays.asList(lAlph));
     private static ArrayList<String> chosenList = new ArrayList<String>();
     private static String word;
-    private static LinkedHashSet<String> allWords = new LinkedHashSet<String>();
+    private static ArrayList<String> allWords = new ArrayList<String>();
 
     public static void setChosen(HashSet<String> chosen, ArrayList<String> alph, String answer){
         chosen.add(answer);
@@ -26,8 +24,7 @@ public class Game {
     }
 
     public Game() throws IOException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
-        Hangman man = new Hangman();
-        game(man);
+        game();
     }
 
     public static void addToArrayList(String item) {
@@ -121,6 +118,8 @@ public class Game {
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(-25.0f);
         clip.start();
         clip.loop(clip.LOOP_CONTINUOUSLY);
         clearScreen();
@@ -140,35 +139,38 @@ public class Game {
         clearScreen();
     }
 
-    public static int guessing(Scanner scanner, int wordLength, Hangman man, int lives) throws IOException, InterruptedException {
+    public static int guessing(Scanner scanner, int wordLength, int lives) throws IOException, InterruptedException {
         WordPicker wordPicker = new WordPicker(wordLength);
         System.out.println(wordPicker);
         word = wordPicker.accessWord();
         String blankWord = wordPicker.accessBlankWord();
         boolean won = false;
-        String stage = man.newStage();
         clearScreen();
         String returnedBlankWord = blankWord;
-        ArrayList<Object> ansCorrectBlank = module(scanner, man, stage, word, blankWord, wordPicker, lives);
+        ArrayList<Object> ansCorrectBlank = module(scanner, word, blankWord, wordPicker, lives);
         returnedBlankWord = ansCorrectBlank.get(1).toString();
         if (returnedBlankWord.equals(blankWord)) lives--;
         while (!won){
             if (lives==0) return 0;
             clearScreen();
-            ansCorrectBlank = module(scanner, man, stage, word, blankWord, wordPicker, lives);
+            ansCorrectBlank = module(scanner, word, blankWord, wordPicker, lives);
             String answer = ansCorrectBlank.get(0).toString();
             returnedBlankWord = ansCorrectBlank.get(1).toString();
             wordPicker = new WordPicker(answer);
             word = wordPicker.accessWord();
             blankWord = wordPicker.accessBlankWord();
             if (returnedBlankWord.equals(blankWord)) lives--;
-            if (!blankWord.contains("_")) won = true;
+            if (!blankWord.contains("-")) won = true;
         }
         return 1;
     }
 
-    public static ArrayList<Object> module(Scanner scanner, Hangman man, String stage, String word, String blankWord, WordPicker wordPicker, int lives){
-        allWords.add(word);
+    public static ArrayList<Object> module(Scanner scanner, String word, String blankWord, WordPicker wordPicker, int lives){
+        if (allWords.size()>0){
+            if (!allWords.get(allWords.size()-1).equals(word)) allWords.add(word);
+        }else{
+            allWords.add(word);
+        }
         System.out.println("Lives left: "+lives);
         System.out.println();
         System.out.println(blankWord);
@@ -176,12 +178,10 @@ public class Game {
         System.out.println(chosenList);
         //System.out.println(word);
         ArrayList<String> letters = new ArrayList<>();
-        //System.out.println(letters);
         for (int i = 0; i < word.length(); i++) {
             letters.add(word.charAt(i)+"");
         }
         System.out.println("Possible words: "+wordPicker.accessWords().size());
-        //System.out.println("kkk"+prevBlank);
         answer = userStringChoices(scanner, "Enter a letter:", alph);
         System.out.println(blankWord);
         ArrayList<Object> ansCorrectBlank = new ArrayList<Object>();
@@ -190,18 +190,16 @@ public class Game {
         return ansCorrectBlank;
     }
 
-    public void game(Hangman man) throws IOException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
+    public void game() throws IOException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
         Scanner scanner = new Scanner(System.in);
         playMusic();
         int[] wordNLives = intro();
         int wordLength = wordNLives[0];
         int lives = wordNLives[1];
-        int victoryStatus = guessing(scanner, wordLength, man, lives);
+        int victoryStatus = guessing(scanner, wordLength, lives);
         clearScreen();
-        ArrayList<String> allWordsL = new ArrayList<String>();
-        allWordsL.addAll(allWords);
         System.out.println("Words: "+allWords);
-        System.out.println("Final Word: "+allWordsL.get(allWords.size()-1));
+        System.out.println("Final Word: "+allWords.get(allWords.size()-1));
         if (victoryStatus == 1) {
             String youWon = " __    __  _____       __  __                 __      __     _____       __  __     \r\n" + //
                     "/\\ \\  /\\ \\/\\  __`\\    /\\ \\/\\ \\               /\\ \\  __/\\ \\   /\\  __`\\    /\\ \\/\\ \\    \r\n" + //

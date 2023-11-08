@@ -40,24 +40,7 @@ public class WordPicker {
     }
     
     public String pickWord(String answer) {
-        // DecisionTree decisionTree = new DecisionTree();
-        // HashMap<String, ArrayList<String>> families = decisionTree.makeFamilies(answer, words);
-        // ArrayList<String> keyList = new ArrayList<>(families.keySet());
-        // int length = 0;
-        // String str = "";
-        // for (String i: keyList){
-        //     if (families.get(i).size()>length){
-        //         length = families.get(i).size();
-        //         words = families.get(i);
-        //         str = i;
-        //     }
-        // }
-        // keys.add(str);
-        // SecureRandom rand = new SecureRandom();
-        // word = words.get(rand.nextInt(words.size()));
-        // return word;
         DecisionTree decisionTree = new DecisionTree();
-        System.out.println("jjqq"+words);
         HashMap<String, ArrayList<String>> families = decisionTree.makeFamilies(answer, words);
         words.clear();
         ArrayList<String> keyList = new ArrayList<>(families.keySet());
@@ -70,8 +53,6 @@ public class WordPicker {
         }
         SecureRandom rand = new SecureRandom();
         word = words.get(rand.nextInt(words.size()));
-        // System.out.println("Word is: "+word);
-        // System.out.println("Words is: "+words);
         return word;
     }
     public static ArrayList<String> splitArrayList(ArrayList<String> keys){
@@ -96,12 +77,12 @@ public class WordPicker {
                 if (key.contains(let)){
                     blankWordBuilder.insert(k, let);
                 }else{
-                    blankWordBuilder.insert(k, "_");
+                    blankWordBuilder.insert(k, "-");
                 }
             }
             blankWord = blankWordBuilder.toString();
         }else{
-            for (int i=0; i<word.length(); i++) blankWord += "_";
+            for (int i=0; i<word.length(); i++) blankWord += "-";
         }
         return blankWord;
     }
