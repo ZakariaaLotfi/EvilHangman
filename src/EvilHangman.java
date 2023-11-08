@@ -6,12 +6,15 @@ public class EvilHangman {
     private List<String> currentWordList;
     private String displayWord;
     private Set<Character> guessedLetters = new HashSet<>();
-    private final int MAX_GUESSES = 10;
+    private int MAX_GUESSES;
+    private int wordLength;
 
-    public EvilHangman(List<String> initialWordList) {
+    public EvilHangman(List<String> initialWordList, int wordLength, int lives) {
         this.currentWordList = initialWordList;
-        this.displayWord = String.join("", Collections.nCopies(initialWordList.get(0).length(), "-"));
+        this.displayWord = String.join("", Collections.nCopies(wordLength, "-"));
         this.numberOfGuesses = 0;
+        this.wordLength = wordLength;
+        this.MAX_GUESSES = lives;
     }
     public void playGame() {
         Scanner scanner = new Scanner(System.in);

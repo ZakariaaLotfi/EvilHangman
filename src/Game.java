@@ -1,12 +1,8 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.*;
 //import java.util.Set;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import javax.sound.sampled.*;
 
 public class Game {
@@ -101,6 +97,25 @@ public class Game {
         }
         return 1;
     }
+    public static List<String> addWords(int length) throws IOException {
+        File file = new File("src/words.txt");
+        List<String> words = new ArrayList<>();
+
+        if (!file.exists()) {
+            throw new FileNotFoundException("File not found: " + file.getAbsolutePath());
+        }
+
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            String word = scanner.nextLine();
+            if (word.length() == length) {
+                words.add(word);
+            }
+        }
+        scanner.close();
+
+        return words;
+    }
 
     public static int[] intro() throws IOException {
         System.out.println("Welcome to Evil Hangman!");
@@ -112,6 +127,13 @@ public class Game {
         }
         int wordLength = userIntChoices(scanner, "What length? (2-20)", lengths);
         int lives = userIntChoices(scanner, "How many lives? (1-25)", livesA);
+        System.out.println("Would you like to play EvilHangman with no words? yes/no");
+        String choice = scanner.next();
+        if (choice.equals("yes")) {
+            EvilHangman game = new EvilHangman(addWords(wordLength), wordLength,lives);
+            game.playGame();
+            System.exit(0);
+        }
         return new int[]{wordLength, lives};
     }
 
@@ -226,7 +248,7 @@ public class Game {
                     "                                                                                                                    \r\n" + //
                     "";
             System.out.println(youLost);
-        Thread.sleep(3000);
+            Thread.sleep(3000);
         }
     }
 }
