@@ -1,11 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 import java.security.SecureRandom;
-import java.util.Scanner;
 
 public class WordPicker {
     private static String word;
@@ -17,11 +14,14 @@ public class WordPicker {
         word = pickWord(length);
         blankWord = createBlankWord(word, keys);
     }
+
     public WordPicker(String answer) throws IOException {
         word = pickWord(answer);
         blankWord = createBlankWord(word, keys);
     }
-    public String pickWord(int length) throws IOException {
+
+
+    public void addWords(int length) throws IOException {
         File file = new File("src/words.txt");
         if (!file.exists()) {
             throw new FileNotFoundException("File not found: " + file.getAbsolutePath());
@@ -33,12 +33,20 @@ public class WordPicker {
                 words.add(word);
             }
         }
+        scanner.close();
+
+    }
+
+
+
+
+    public String pickWord(int length) throws IOException {
+        addWords(length);
         SecureRandom secure = new SecureRandom();
         int randomnum = secure.nextInt(words.size() -1);
-        scanner.close();
         return(words.get(randomnum));
     }
-    
+
     public String pickWord(String answer) {
         DecisionTree decisionTree = new DecisionTree();
         HashMap<String, ArrayList<String>> families = decisionTree.makeFamilies(answer, words);
