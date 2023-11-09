@@ -40,6 +40,23 @@ public class WordPicker {
     }
     
     public String pickWord(String answer) {
+        //GREEDY ALGO FOR SHOWCASE DO NOT DELETE COMMENTED CODE
+        // DecisionTree decisionTree = new DecisionTree();
+        // HashMap<String, ArrayList<String>> families = decisionTree.makeFamilies(answer, words);
+        // ArrayList<String> keyList = new ArrayList<>(families.keySet());
+        // int length = 0;
+        // String str = "";
+        // for (String i: keyList){
+        //     if (families.get(i).size()>length){
+        //         length = families.get(i).size();
+        //         words = families.get(i);
+        //         str = i;
+        //     }
+        // }
+        // keys.add(str);
+        // SecureRandom rand = new SecureRandom();
+        // word = words.get(rand.nextInt(words.size()));
+        // return word;
         DecisionTree decisionTree = new DecisionTree();
         HashMap<String, ArrayList<String>> families = decisionTree.makeFamilies(answer, words);
         words.clear();

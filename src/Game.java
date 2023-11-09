@@ -23,7 +23,7 @@ public class Game {
         chosenList.remove(0);
     }
 
-    public Game() throws IOException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
+    public Game() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         game();
     }
 
@@ -139,7 +139,7 @@ public class Game {
         clearScreen();
     }
 
-    public static int guessing(Scanner scanner, int wordLength, int lives) throws IOException, InterruptedException {
+    public static int guessing(Scanner scanner, int wordLength, int lives) throws IOException {
         WordPicker wordPicker = new WordPicker(wordLength);
         System.out.println(wordPicker);
         word = wordPicker.accessWord();
@@ -190,7 +190,7 @@ public class Game {
         return ansCorrectBlank;
     }
 
-    public void game() throws IOException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
+    public void game() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         Scanner scanner = new Scanner(System.in);
         playMusic();
         int[] wordNLives = intro();
@@ -224,7 +224,6 @@ public class Game {
                     "                                                                                                                    \r\n" + //
                     "";
             System.out.println(youLost);
-        Thread.sleep(3000);
         }
     }
 }
